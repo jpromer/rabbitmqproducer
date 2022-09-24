@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmqproducer-v1
+  labels:
+    app: rabbitmqproducer
+    version: "1.0"
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: rabbitmqproducer
+  template:
+    metadata:
+      labels:
+        app: rabbitmqproducer
+        version: "1.0"
+    spec:
+      containers:
+      - name: rabbitmqproducer
+        image: jpromer/rabbitmqproducer
+        ports:
+        - name: http-server
+          containerPort: 4001
