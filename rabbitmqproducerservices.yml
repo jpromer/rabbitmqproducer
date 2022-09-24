@@ -6,7 +6,7 @@ metadata:
     app: rabbitmqproducer
 spec:
   ports:
-  - port: 4001
+  - port: 3004
     targetPort: http-server
   selector:
     app: rabbitmqproducer

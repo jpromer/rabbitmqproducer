@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: rabbitmqproducer
-        image: jpromer/rabbitmqproducer
+        image: jpromer/rabbitmqproducerv1
         ports:
         - name: http-server
-          containerPort: 4001
+          containerPort: 3004

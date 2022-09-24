@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = process.env.PORT || 4001;
+const PORT = 3004;
 
 app.use(express.json());
 
@@ -18,6 +18,8 @@ async function connectQueue() {
 
     await channel.assertQueue("bike");
     await channel.assertQueue("location");
+    await channel.assertQueue("udatebike");
+    await channel.assertQueue("rental");
   } catch (error) {
     console.log(error);
   }
@@ -82,7 +84,7 @@ const sendDataBikeLocation = async (bike, location) => {
 const sendRental = async (bike, rental) => {
   // send data to queue
   connectQueue();
-  await channel.sendToQueue("bike", Buffer.from(JSON.stringify(bike)));
+  await channel.sendToQueue("udatebike", Buffer.from(JSON.stringify(bike)));
   await channel.sendToQueue("rental", Buffer.from(JSON.stringify(rental)));
   // close the channel and connection
   await channel.close();
@@ -121,7 +123,7 @@ app.post("/rental", (req, res) => {
   const dataRental = {
     idBike: req.body.idBike,
     dateInitial: req.body.dateInitial,
-    dataFinished: req.dataFinished,
+    dataFinished: req.body.dataFinished,
   }
   sendRental(dataBike, dataRental);
   console.log("A message is sent to queue");
